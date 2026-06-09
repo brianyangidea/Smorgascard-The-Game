@@ -9,8 +9,8 @@
 position = Vector2(47, -4)
 script = ExtResource("1_0wfyh")
 
-[node name="playingcard_banana" parent="." unique_id=751709746 instance=ExtResource("1_o5qli")]
-position = Vector2(455, 286)
+[node name="playingcard_banana" parent="card_manager" unique_id=751709746 instance=ExtResource("1_o5qli")]
+position = Vector2(408, 290)
 
-[node name="playingcard_apricot" parent="." unique_id=1575834116 instance=ExtResource("1_o5qli")]
-position = Vector2(894, 312)
+[node name="playingcard_apricot" parent="card_manager" unique_id=1575834116 instance=ExtResource("1_o5qli")]
+position = Vector2(847, 316)
