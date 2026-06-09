@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cefy8607j1e4g"]
+
+[ext_resource type="Texture2D" uid="uid://ctospdchoowq8" path="res://assets/banana.jpg" id="1_d81rb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
+size = Vector2(358.5, 500.5)
+
+[node name="card" type="Node2D" unique_id=751709746]
+position = Vector2(572, 308)
+
+[node name="cardimage" type="Sprite2D" parent="." unique_id=406842644]
+position = Vector2(1, 2.000061)
+scale = Vector2(0.3659359, 0.51106507)
+texture = ExtResource("1_d81rb")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2087624620]
+position = Vector2(346, 42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=705092062]
+position = Vector2(-344, -41)
+shape = SubResource("RectangleShape2D_o5qli")
