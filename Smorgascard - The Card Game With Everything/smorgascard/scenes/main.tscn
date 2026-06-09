@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dcqgtrbcuq60p" path="res://scripts/card_manager.gd" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://bbyyen8828fgs" path="res://scripts/player_hand.gd" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://csthb6i22oggd" path="res://scenes/card_slot.tscn" id="3_sugp2"]
-[ext_resource type="Texture2D" uid="uid://cawedt8drcr1f" path="res://assets/apricot.jpg" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://darfsc8eg8eou" path="res://scripts/deck.gd" id="4_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://hq1kixda2adi" path="res://assets/deck.png" id="5_tefeu"]
 [ext_resource type="Script" uid="uid://cdviw3mbqc62x" path="res://scripts/input_manager.gd" id="6_tefeu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
@@ -34,9 +34,9 @@ script = ExtResource("4_tbgi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="deck" unique_id=1570224321]
 z_index = -2
-position = Vector2(-1.5258789e-05, 0)
-scale = Vector2(0.46857145, 0.5542857)
-texture = ExtResource("4_jyhfs")
+position = Vector2(0.094706535, -0.25575066)
+scale = Vector2(1.362272, 1.2023364)
+texture = ExtResource("5_tefeu")
 
 [node name="Area2D" type="Area2D" parent="deck" unique_id=695975885]
 collision_layer = 4

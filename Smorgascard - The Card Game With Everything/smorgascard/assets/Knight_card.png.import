@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cawedt8drcr1f"
-path="res://.godot/imported/apricot.jpg-70fa4fa966eb25a6a71bfb6547e9d6e2.ctex"
+uid="uid://daujk1j1giili"
+path="res://.godot/imported/Knight_card.png-ffb96a41b28d61dcc936bfcc585bfe94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/apricot.jpg"
-dest_files=["res://.godot/imported/apricot.jpg-70fa4fa966eb25a6a71bfb6547e9d6e2.ctex"]
+source_file="res://assets/Knight_card.png"
+dest_files=["res://.godot/imported/Knight_card.png-ffb96a41b28d61dcc936bfcc585bfe94.ctex"]
 
 [params]
 

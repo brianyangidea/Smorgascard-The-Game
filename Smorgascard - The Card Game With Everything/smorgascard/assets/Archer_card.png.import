@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctospdchoowq8"
-path="res://.godot/imported/banana.jpg-d513a6f78b54fc8b6b06ea62b66b4ef4.ctex"
+uid="uid://bfb8oinxctqvk"
+path="res://.godot/imported/Archer_card.png-e04c0979e1d1a550992ea44a95f34946.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/banana.jpg"
-dest_files=["res://.godot/imported/banana.jpg-d513a6f78b54fc8b6b06ea62b66b4ef4.ctex"]
+source_file="res://assets/Archer_card.png"
+dest_files=["res://.godot/imported/Archer_card.png-e04c0979e1d1a550992ea44a95f34946.ctex"]
 
 [params]
 
