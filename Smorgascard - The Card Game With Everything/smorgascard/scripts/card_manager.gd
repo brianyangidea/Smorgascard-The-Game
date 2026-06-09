@@ -6,11 +6,12 @@ const COLLISION_MASK_CARD_SLOT = 2
 var card_being_dragged
 var screen_size
 var is_hovering_on_card
+var player_hand_reference
 
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
-
+	player_hand_reference = $"../player_hand"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -40,11 +41,14 @@ func finish_drag():
 	card_being_dragged.scale = Vector2(1.05, 1.05)
 	var card_slot_found = check_for_card_slot()
 	if card_slot_found and !card_slot_found.card_in_slot:
+		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		#Card dropped into slot
 		card_being_dragged.position = card_slot_found.position
 		#The two lines below prevents interaction with cards alrady in a slot
 		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
 		card_slot_found.card_in_slot = true
+	else:
+		player_hand_reference.add_card_to_hand(card_being_dragged)
 	card_being_dragged = null
 	
 
