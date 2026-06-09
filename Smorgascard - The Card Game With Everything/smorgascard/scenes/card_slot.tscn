@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://csthb6i22oggd"]
 
-[ext_resource type="Script" uid="uid://byn3gc7f1yg0j" path="res://scripts/card_slot.gd" id="1_cypty"]
+[ext_resource type="Script" uid="uid://byn3gc7f1yg0j" path="res://scripts/monster_card_slot.gd" id="1_cypty"]
 [ext_resource type="Texture2D" uid="uid://io55nqw17ilt" path="res://assets/empty_box.png" id="1_mxh2e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]

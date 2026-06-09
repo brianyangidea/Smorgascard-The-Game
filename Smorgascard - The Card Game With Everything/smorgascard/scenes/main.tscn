@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dcqgtrbcuq60p" path="res://scripts/card_manager.gd" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://bbyyen8828fgs" path="res://scripts/player_hand.gd" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://dc1s53fbxtved" path="res://scripts/magic_card_slot.gd" id="3_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://csthb6i22oggd" path="res://scenes/card_slot.tscn" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://darfsc8eg8eou" path="res://scripts/deck.gd" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://hhm3i615cobb" path="res://scenes/enemy_card_slot.tscn" id="4_tipki"]
 [ext_resource type="Texture2D" uid="uid://hq1kixda2adi" path="res://assets/deck.png" id="5_tefeu"]
 [ext_resource type="Script" uid="uid://cdviw3mbqc62x" path="res://scripts/input_manager.gd" id="6_tefeu"]
 
@@ -15,21 +17,110 @@ size = Vector2(165, 194.5)
 [node name="card_manager" type="Node2D" parent="." unique_id=709145111]
 script = ExtResource("1_0wfyh")
 
-[node name="card_slot" parent="." unique_id=1723085319 instance=ExtResource("3_sugp2")]
-position = Vector2(159, 462)
+[node name="card_slots" type="Node" parent="." unique_id=84151877]
 
-[node name="card_slot2" parent="." unique_id=872418452 instance=ExtResource("3_sugp2")]
-position = Vector2(318, 462)
+[node name="card_slot1" parent="card_slots" unique_id=1723085319 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(1221, 550)
+scale = Vector2(0.8, 0.8)
 
-[node name="card_slot3" parent="." unique_id=989340605 instance=ExtResource("3_sugp2")]
-position = Vector2(481, 462)
+[node name="card_slot2" parent="card_slots" unique_id=872418452 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(960, 550)
+scale = Vector2(0.8, 0.8)
+
+[node name="card_slot3" parent="card_slots" unique_id=989340605 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(1088, 550)
+scale = Vector2(0.8, 0.8)
+
+[node name="card_slot4" parent="card_slots" unique_id=2046175996 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(828, 550)
+scale = Vector2(0.8, 0.8)
+
+[node name="card_slot5" parent="card_slots" unique_id=1326477253 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(696, 550)
+scale = Vector2(0.8, 0.8)
+
+[node name="card_slot6" parent="card_slots" unique_id=998608176 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(1221, 704)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("3_o6xl0")
+
+[node name="card_slot7" parent="card_slots" unique_id=953285105 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(960, 704)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("3_o6xl0")
+
+[node name="card_slot8" parent="card_slots" unique_id=1836596091 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(1088, 704)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("3_o6xl0")
+
+[node name="card_slot9" parent="card_slots" unique_id=1789609202 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(828, 704)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("3_o6xl0")
+
+[node name="card_slot10" parent="card_slots" unique_id=1410323843 instance=ExtResource("3_sugp2")]
+z_index = -3
+position = Vector2(696, 704)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("3_o6xl0")
+
+[node name="enemy_card_slot1" parent="card_slots" unique_id=1545785358 instance=ExtResource("4_tipki")]
+position = Vector2(1221, 362)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot2" parent="card_slots" unique_id=454054251 instance=ExtResource("4_tipki")]
+position = Vector2(1088, 362)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot3" parent="card_slots" unique_id=1685479030 instance=ExtResource("4_tipki")]
+position = Vector2(960, 362)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot4" parent="card_slots" unique_id=1982624156 instance=ExtResource("4_tipki")]
+position = Vector2(828, 362)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot5" parent="card_slots" unique_id=451669938 instance=ExtResource("4_tipki")]
+position = Vector2(696, 362)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot6" parent="card_slots" unique_id=699394650 instance=ExtResource("4_tipki")]
+position = Vector2(1221, 205)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot7" parent="card_slots" unique_id=728702141 instance=ExtResource("4_tipki")]
+position = Vector2(1088, 205)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot8" parent="card_slots" unique_id=1642336412 instance=ExtResource("4_tipki")]
+position = Vector2(960, 205)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot9" parent="card_slots" unique_id=337580403 instance=ExtResource("4_tipki")]
+position = Vector2(828, 205)
+scale = Vector2(0.8, 0.8)
+
+[node name="enemy_card_slot10" parent="card_slots" unique_id=1015824557 instance=ExtResource("4_tipki")]
+position = Vector2(696, 205)
+scale = Vector2(0.8, 0.8)
 
 [node name="player_hand" type="Node2D" parent="." unique_id=602123205]
 script = ExtResource("3_jyhfs")
 
 [node name="deck" type="Node2D" parent="." unique_id=1728130434]
 z_index = -2
-position = Vector2(113.16896, 873.46765)
+position = Vector2(115.16896, 944.46765)
+scale = Vector2(0.8, 0.8)
 script = ExtResource("4_tbgi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="deck" unique_id=1570224321]
@@ -56,3 +147,27 @@ text = "0"
 
 [node name="input_manager" type="Node2D" parent="." unique_id=239003621]
 script = ExtResource("6_tefeu")
+
+[node name="end_turn_button" type="Button" parent="." unique_id=2128117065]
+offset_left = 110.0
+offset_top = 550.0
+offset_right = 188.0
+offset_bottom = 581.0
+text = "End Turn"
+
+[node name="opponent_deck" type="Node2D" parent="." unique_id=164241987]
+
+[node name="Sprite2D" type="Sprite2D" parent="opponent_deck" unique_id=1211964109]
+z_index = -2
+position = Vector2(1810.7081, 119.87368)
+scale = Vector2(0.81736326, 0.7214019)
+texture = ExtResource("5_tefeu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="opponent_deck" unique_id=1097044562]
+modulate = Color(0, 0, 0, 1)
+offset_left = 1805.2512
+offset_top = 103.22713
+offset_right = 1845.2512
+offset_bottom = 143.22713
+scale = Vector2(2, 2)
+text = "0"

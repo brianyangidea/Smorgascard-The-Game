@@ -2,10 +2,12 @@ extends Node2D
 
 const CARD_SCENE_PATH = "res://scenes/card.tscn"
 const CARD_DRAW_SPEED = 0.2 #Controls speed at which cards are drawn out of deck
+const STARTING_HAND_SIZE = 5
 
 #This variable contains the player's entire deck and all its cards
-var player_deck = ["Knight", "Archer", "Demon", "Knight"]
+var player_deck = ["Knight", "Archer", "Demon", "Knight", "Knight", "Knight", "Knight"]
 var card_database_reference 
+var drawn_card_this_turn = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -14,9 +16,17 @@ func _ready() -> void:
 	$RichTextLabel.text = str(player_deck.size())
 	card_database_reference = preload("res://scripts/card_database.gd")
 
+	for i in range(STARTING_HAND_SIZE):
+		draw_card()
+		drawn_card_this_turn = false
+	drawn_card_this_turn = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func draw_card():
+	if drawn_card_this_turn:
+		return
+	drawn_card_this_turn = true
+	
 	var card_drawn_name = player_deck[0]
 	player_deck.erase(card_drawn_name)
 	
@@ -35,6 +45,7 @@ func draw_card():
 	new_card.position = self.position
 	new_card.get_node("attack").text = str(card_database_reference.CARDS[card_drawn_name][0])
 	new_card.get_node("health").text = str(card_database_reference.CARDS[card_drawn_name][1])
+	new_card.card_type = card_database_reference.CARDS[card_drawn_name][2]
 	$"../card_manager".add_child(new_card)
 	new_card.name = "Card"
 	$"../player_hand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
