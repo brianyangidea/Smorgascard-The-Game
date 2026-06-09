@@ -9,11 +9,13 @@ var is_hovering_on_card
 var player_hand_reference
 
 
+#Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	player_hand_reference = $"../player_hand"
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+#Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if card_being_dragged:
 		var mouse_pos = get_global_mouse_position()
@@ -21,6 +23,7 @@ func _process(_delta: float) -> void:
 			clamp(mouse_pos.y, 0, screen_size.y))
 
 
+#Called for input event. This case is a mouse click
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
@@ -30,13 +33,15 @@ func _input(event):
 		else:
 			if card_being_dragged:
 				finish_drag()
-			
 
+
+#Simple fuction that scales down the card when it is being dragged
 func start_drag(card):
 	card_being_dragged = card
 	card.scale = Vector2(0.8, 0.8)
 	
-	
+
+#Ran once the card is done being dragged. Checks for card slots.
 func finish_drag():
 	card_being_dragged.scale = Vector2(1.05, 1.05)
 	var card_slot_found = check_for_card_slot()
@@ -52,19 +57,22 @@ func finish_drag():
 	card_being_dragged = null
 	
 
-#Connects the card_hovvered_over and card_hovvered_off functions to each card
+#Connects the card_hovered_over and card_hovered_off functions to each card
 func connect_card_signals(card):
-	card.connect("hovered", card_hovvered_over)
-	card.connect("hovered_off", card_hovvered_off)
+	card.connect("hovered", card_hovered_over)
+	card.connect("hovered_off", card_hovered_off)
 
-#Called when card is hovered over
-func card_hovvered_over(card):
+
+#Called when card is hovered over. Calls highlight_card to turn on.
+func card_hovered_over(card):
 	if !is_hovering_on_card:
 		is_hovering_on_card = true
 		highlight_card(card, true)
 	
-#Called when card is hovered off
-func card_hovvered_off(card):
+	
+#Called when card is hovered off. Calls highlight_card to turn off.
+#Also has check to make sure we only highlight the correct card
+func card_hovered_off(card):
 	if !card_being_dragged:
 		highlight_card(card, false)
 		#Check if we hovered straight from one card to another
@@ -74,6 +82,7 @@ func card_hovvered_off(card):
 		else:
 			is_hovering_on_card = false
 	
+
 #Handles the highlighting of each card
 func highlight_card(card, hovered_status):
 	if hovered_status:
@@ -82,6 +91,7 @@ func highlight_card(card, hovered_status):
 	else:
 		card.scale = Vector2(1, 1)
 		card.z_index = 1
+
 
 #This function checks where the mouse is clicking.
 #It returns the card being interacted with if it is over a card
@@ -97,6 +107,8 @@ func check_for_card():
 		return get_card_with_highest_z_index(result)
 	return null
 	
+
+#This function checks for the card slot
 func check_for_card_slot():
 	var space_state = get_viewport().world_2d.direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()
@@ -108,6 +120,10 @@ func check_for_card_slot():
 		return result[0].collider.get_parent()
 	return null
 	
+
+#This function is used in tandem with dragging. It's to ensure we
+#only drag the card that's actually visually on top of the other cards.
+#(Z-indices are basically the layers.)
 func get_card_with_highest_z_index(cards):
 	#Assume first card has highest z index
 	var highest_z_card = cards[0].collider.get_parent()
