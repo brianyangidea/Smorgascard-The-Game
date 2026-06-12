@@ -1,3 +1,5 @@
+#This function pretty much manages all the logic behind playing and dragging cards
+
 extends Node2D
 
 const COLLISION_MASK_CARD = 1

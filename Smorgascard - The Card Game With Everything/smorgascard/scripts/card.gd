@@ -1,3 +1,6 @@
+#This script handles the basic card visuals
+#Also ensure all cards are a CHILD of card_manager or else ERRORS GALORE
+
 extends Node2D
 
 signal hovered

@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://hhm3i615cobb" path="res://scenes/enemy_card_slot.tscn" id="4_tipki"]
 [ext_resource type="Texture2D" uid="uid://hq1kixda2adi" path="res://assets/deck.png" id="5_tefeu"]
 [ext_resource type="Script" uid="uid://cdviw3mbqc62x" path="res://scripts/input_manager.gd" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://c23si5hvitiqv" path="res://scripts/battle_manager.gd" id="9_85g3d"]
+[ext_resource type="Script" uid="uid://bjx6bu1e3vdfq" path="res://scripts/enemy_deck.gd" id="9_ya4ey"]
+[ext_resource type="Script" uid="uid://b8mqxwcgjf64v" path="res://scripts/enemy_hand.gd" id="10_choun"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
 size = Vector2(165, 194.5)
@@ -117,6 +120,9 @@ scale = Vector2(0.8, 0.8)
 [node name="player_hand" type="Node2D" parent="." unique_id=602123205]
 script = ExtResource("3_jyhfs")
 
+[node name="enemy_hand" type="Node2D" parent="." unique_id=1230690160]
+script = ExtResource("10_choun")
+
 [node name="deck" type="Node2D" parent="." unique_id=1728130434]
 z_index = -2
 position = Vector2(115.16896, 944.46765)
@@ -155,19 +161,28 @@ offset_right = 188.0
 offset_bottom = 581.0
 text = "End Turn"
 
-[node name="opponent_deck" type="Node2D" parent="." unique_id=164241987]
+[node name="enemy_deck" type="Node2D" parent="." unique_id=164241987]
+position = Vector2(1802, 125)
+script = ExtResource("9_ya4ey")
 
-[node name="Sprite2D" type="Sprite2D" parent="opponent_deck" unique_id=1211964109]
+[node name="Sprite2D" type="Sprite2D" parent="enemy_deck" unique_id=1211964109]
 z_index = -2
-position = Vector2(1810.7081, 119.87368)
-scale = Vector2(0.81736326, 0.7214019)
+position = Vector2(0.00012207031, -7.6293945e-06)
 texture = ExtResource("5_tefeu")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="opponent_deck" unique_id=1097044562]
+[node name="RichTextLabel" type="RichTextLabel" parent="enemy_deck" unique_id=1097044562]
 modulate = Color(0, 0, 0, 1)
-offset_left = 1805.2512
-offset_top = 103.22713
-offset_right = 1845.2512
-offset_bottom = 143.22713
+offset_left = -6.0
+offset_top = -20.0
+offset_right = 34.0
+offset_bottom = 20.0
 scale = Vector2(2, 2)
 text = "0"
+
+[node name="battle_manager" type="Node" parent="." unique_id=2082809842]
+script = ExtResource("9_85g3d")
+
+[node name="battle_timer" type="Timer" parent="." unique_id=355215529]
+one_shot = true
+
+[connection signal="pressed" from="end_turn_button" to="battle_manager" method="_on_end_turn_button_pressed"]

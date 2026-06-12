@@ -1,3 +1,5 @@
+#manages game inputs
+
 extends Node2D
 
 signal left_mouse_button_clicked
