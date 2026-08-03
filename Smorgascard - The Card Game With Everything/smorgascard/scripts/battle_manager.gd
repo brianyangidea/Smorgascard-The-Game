@@ -13,6 +13,9 @@ var opponent_cards_on_battlefield = []
 var player_cards_on_battlefield = []
 var player_health
 var opponent_health
+var player_cards_that_attacked_this_turn = []
+var is_opponents_turn = false
+var player_is_attacking = false
 
 
 func _ready() -> void:
@@ -32,6 +35,9 @@ func _ready() -> void:
 	$"../enemy_health".text = str(opponent_health)
 
 func _on_end_turn_button_pressed() -> void:
+	is_opponents_turn = true
+	$"../card_manager".unselect_selected_monster()
+	player_cards_that_attacked_this_turn = []
 	opponents_turn()
 
 
@@ -72,7 +78,11 @@ func direct_attack(attacking_card, attacker):
 	if attacker == "opponent":
 		new_pos_y = 1080
 	else:
+		$"../end_turn_button".disabled = true
+		$"../end_turn_button".visible = false
+		player_is_attacking = true
 		new_pos_y = 0
+		player_cards_that_attacked_this_turn.append(attacking_card)
 	var new_pos = Vector2(attacking_card.position.x, new_pos_y)
 	
 	attacking_card.z_index = 5
@@ -97,10 +107,22 @@ func direct_attack(attacking_card, attacker):
 	
 	attacking_card.z_index = 0
 	await wait(1.0)
+	
+	if attacker == "player":
+		player_is_attacking = false
+		$"../end_turn_button".disabled = false
+		$"../end_turn_button".visible = true
 
 
 #This function is for a card attacking another card (card on card violence!)
 func attack(attacking_card, defending_card, attacker):
+	if attacker == "player":
+		player_is_attacking = true
+		$"../end_turn_button".disabled = true
+		$"../end_turn_button".visible = false
+		$"../card_manager".selected_monster = null
+		player_cards_that_attacked_this_turn.append(attacking_card)
+	
 	attacking_card.z_index = 5
 	var new_pos = Vector2(defending_card.position.x, defending_card.position.y + BATTLE_POS_OFFSET)
 	
@@ -134,6 +156,11 @@ func attack(attacking_card, defending_card, attacker):
 		
 	if card_was_destroyed:
 		await wait(1.0)
+		
+	if attacker == "player":
+		player_is_attacking = false
+		$"../end_turn_button".disabled = false
+		$"../end_turn_button".visible = true
 
 
 #Move card to discard pile
@@ -141,15 +168,32 @@ func attack(attacking_card, defending_card, attacker):
 func destroy_card(card, card_owner):
 	var new_pos
 	if card_owner == "player":
+		card.defeated = true
+		card.get_node("Area2D/CollisionShape2D").disabled = true
 		new_pos = $"../player_discard".position
+		if card in player_cards_on_battlefield:
+			player_cards_on_battlefield.erase(card)
+		card.card_slot_card_is_in.get_node("Area2D/CollisionShape2D").disabled = false
 	else:
 		new_pos = $"../opponent_discard".position
+		if card in opponent_cards_on_battlefield:
+			opponent_cards_on_battlefield.erase(card)
 		
+	card.card_slot_card_is_in.card_in_slot = false	
+	card.card_slot_card_is_in = null
+	
 	#animate
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "position", new_pos, CARD_MOVE_SPEED)
-	await wait(0.15)
-	
+
+
+func enemy_card_selected(defending_card):
+	var attacking_card = $"../card_manager".selected_monster
+	if attacking_card:
+		if defending_card in opponent_cards_on_battlefield:
+			if player_is_attacking == false:
+				$"../card_manager".selected_monster = null
+				attack(attacking_card, defending_card, "player")
 
 
 #This function contain's the oppoent's AI for card playing
@@ -200,5 +244,6 @@ func wait(wait_time):
 #Reset player deck draw
 func end_opponent_turn():
 	$"../deck".reset_draw()
+	is_opponents_turn = false
 	$"../end_turn_button".disabled = false
 	$"../end_turn_button".visible = true

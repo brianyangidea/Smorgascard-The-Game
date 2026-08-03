@@ -159,6 +159,9 @@ _data = {
 &"card_flip": SubResource("Animation_kg30u")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vemmd"]
+size = Vector2(120, 161)
+
 [node name="card" type="Node2D" unique_id=751709746]
 script = ExtResource("1_vemmd")
 
@@ -190,3 +193,11 @@ text = "0"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=286571995]
 libraries/ = SubResource("AnimationLibrary_sy11y")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2112530312]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1223239361]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_vemmd")

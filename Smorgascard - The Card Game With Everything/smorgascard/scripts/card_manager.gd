@@ -14,6 +14,7 @@ var screen_size
 var is_hovering_on_card
 var player_hand_reference
 var played_monster_card_this_turn = false
+var selected_monster 
 
 
 #Called when the node enters the scene tree for the first time.
@@ -28,6 +29,40 @@ func _process(_delta: float) -> void:
 		var mouse_pos = get_global_mouse_position()
 		card_being_dragged.position = Vector2(clamp(mouse_pos.x, 0, screen_size.x), 
 			clamp(mouse_pos.y, 0, screen_size.y))
+
+
+func card_clicked(card):
+	if card.card_slot_card_is_in:
+		#card is on battlefield
+		if $"../battle_manager".is_opponents_turn == false:
+			if $"../battle_manager".player_is_attacking == false:
+				if card not in $"../battle_manager".player_cards_that_attacked_this_turn:
+					if $"../battle_manager".opponent_cards_on_battlefield.size() == 0:
+						#runs a direct attack if no cards on opponent's side
+						$"../battle_manager".direct_attack(card, "player")
+						return
+					else:
+						select_card_for_battle(card)
+	else:
+		#Allow dragging the card to the battlefield
+		start_drag(card)
+
+
+func select_card_for_battle(card):
+	#toggle selected card
+	if selected_monster:
+		if selected_monster == card:
+			#If we selected the same card, unselect it
+			card.position.y += 20
+			selected_monster = null
+		else:
+			#If we selected another card, change to that card as selection
+			selected_monster.position.y += 20
+			selected_monster = card
+			card.position.y -= 20
+	else:
+		selected_monster = card
+		card.position.y -= 20
 
 
 #Simple fuction that scales down the card when it is being dragged
@@ -51,15 +86,20 @@ func finish_drag():
 				is_hovering_on_card = false
 				card_being_dragged.position = card_slot_found.position
 				card_being_dragged.card_slot_card_is_in = card_slot_found
-				#The two lines below prevents interaction with cards alrady in a slot
-				card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
 				card_slot_found.card_in_slot = true
+				card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
 				$"../battle_manager".player_cards_on_battlefield.append(card_being_dragged)
 				card_being_dragged = null
 				return
 	player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
 	
+	
+func unselect_selected_monster():
+	if selected_monster:
+		selected_monster.position.y += 20
+		selected_monster = null
+		
 
 #Connects the card_hovered_over and card_hovered_off functions to each card
 func connect_card_signals(card):
@@ -73,6 +113,8 @@ func on_left_click_released():
 
 #Called when card is hovered over. Calls highlight_card to turn on.
 func card_hovered_over(card):
+	if card.card_slot_card_is_in:
+		return
 	if !is_hovering_on_card:
 		is_hovering_on_card = true
 		highlight_card(card, true)
@@ -81,15 +123,16 @@ func card_hovered_over(card):
 #Called when card is hovered off. Calls highlight_card to turn off.
 #Also has check to make sure we only highlight the correct card
 func card_hovered_off(card):
-	#Check if card is not in a card slot AND not being dragged
-	if !card.card_slot_card_is_in && !card_being_dragged:
-		highlight_card(card, false)
-		#Check if we hovered straight from one card to another
-		var new_card_hovered = check_for_card()
-		if new_card_hovered and new_card_hovered != card:
-			highlight_card(new_card_hovered, true)
-		else:
-			is_hovering_on_card = false
+	if !card.defeated:
+		#Check if card is not in a card slot AND not being dragged
+		if !card.card_slot_card_is_in && !card_being_dragged:
+			highlight_card(card, false)
+			#Check if we hovered straight from one card to another
+			var new_card_hovered = check_for_card()
+			if new_card_hovered and new_card_hovered != card:
+				highlight_card(new_card_hovered, true)
+			else:
+				is_hovering_on_card = false
 	
 
 #Handles the highlighting of each card

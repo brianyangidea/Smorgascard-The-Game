@@ -6,6 +6,7 @@ extends Node2D
 signal hovered
 signal hovered_off
 
+var defeated = false
 var hand_position
 var card_slot_card_is_in
 var card_type
