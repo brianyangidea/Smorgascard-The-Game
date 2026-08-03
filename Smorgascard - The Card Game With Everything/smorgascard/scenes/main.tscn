@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://c23si5hvitiqv" path="res://scripts/battle_manager.gd" id="9_85g3d"]
 [ext_resource type="Script" uid="uid://bjx6bu1e3vdfq" path="res://scripts/enemy_deck.gd" id="9_ya4ey"]
 [ext_resource type="Script" uid="uid://b8mqxwcgjf64v" path="res://scripts/enemy_hand.gd" id="10_choun"]
+[ext_resource type="Texture2D" uid="uid://io55nqw17ilt" path="res://assets/empty_box.png" id="12_eb6dy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
 size = Vector2(165, 194.5)
@@ -184,5 +185,35 @@ script = ExtResource("9_85g3d")
 
 [node name="battle_timer" type="Timer" parent="." unique_id=355215529]
 one_shot = true
+
+[node name="player_health" type="RichTextLabel" parent="." unique_id=870948589]
+offset_left = 111.0
+offset_top = 611.0
+offset_right = 159.0
+offset_bottom = 638.0
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="enemy_health" type="RichTextLabel" parent="." unique_id=1626518117]
+offset_left = 107.0
+offset_top = 467.0
+offset_right = 167.5
+offset_bottom = 499.5
+scale = Vector2(2, 2)
+text = "0"
+
+[node name="player_discard" type="Node2D" parent="." unique_id=486615863]
+position = Vector2(1419.9999, 632.99994)
+scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="player_discard" unique_id=1950376571]
+texture = ExtResource("12_eb6dy")
+
+[node name="opponent_discard" type="Node2D" parent="." unique_id=524882859]
+position = Vector2(500.99997, 274.99994)
+scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="opponent_discard" unique_id=1601895645]
+texture = ExtResource("12_eb6dy")
 
 [connection signal="pressed" from="end_turn_button" to="battle_manager" method="_on_end_turn_button_pressed"]

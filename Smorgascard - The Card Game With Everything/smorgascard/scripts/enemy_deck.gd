@@ -35,15 +35,23 @@ func draw_card():
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
 	var card_image_path = str("res://assets/" + card_drawn_name + "_card.png")
-	new_card.get_node("card_image").texture = load(card_image_path)
+	
 	new_card.position = self.position
+	new_card.get_node("card_image").texture = load(card_image_path)
+	
 	new_card.attack = card_database_reference.CARDS[card_drawn_name][0]
 	new_card.get_node("attack").text = str(new_card.attack)
-	new_card.get_node("health").text = str(card_database_reference.CARDS[card_drawn_name][1])
+	new_card.health = card_database_reference.CARDS[card_drawn_name][1]
+	new_card.get_node("health").text = str(new_card.health)
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name][2]
+	
 	$"../card_manager".add_child(new_card)
 	new_card.name = "Card"
 	$"../enemy_hand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
+	
+	#------------------------------------
 	#new_card.get_node("AnimationPlayer").play("card_flip")
+	#------------------------------------
+	
 	#^^^this line is commented out to hide the opponent's cards!
 	#Uncomment to reveal enemy cards
