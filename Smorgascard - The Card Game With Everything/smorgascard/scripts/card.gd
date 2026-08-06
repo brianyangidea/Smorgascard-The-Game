@@ -14,6 +14,8 @@ var card_type
 var health
 var attack
 
+var ability_script
+
 
 #Called when the node enters the scene tree for the first time.
 func _ready() -> void:

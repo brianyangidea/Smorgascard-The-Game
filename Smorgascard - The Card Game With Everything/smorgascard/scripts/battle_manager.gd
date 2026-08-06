@@ -136,8 +136,10 @@ func attack(attacking_card, defending_card, attacker):
 	#Cards doing damage to each other
 	defending_card.health = max(0, defending_card.health - attacking_card.attack)
 	defending_card.get_node("health").text = str(defending_card.health)
-	attacking_card.health = max(0, attacking_card.health - defending_card.attack)
-	attacking_card.get_node("health").text = str(attacking_card.health)
+	
+	########Uncomment this code below to make it so the attacker also takes damage
+	#attacking_card.health = max(0, attacking_card.health - defending_card.attack)
+	#attacking_card.get_node("health").text = str(attacking_card.health)
 	
 	attacking_card.z_index = 0
 	await wait(0.2)
@@ -247,3 +249,12 @@ func end_opponent_turn():
 	is_opponents_turn = false
 	$"../end_turn_button".disabled = false
 	$"../end_turn_button".visible = true
+	
+	
+func enable_end_turn_button(is_enabled):
+	if is_enabled:
+		$"../end_turn_button".disabled = false
+		$"../end_turn_button".visible = true
+	else:
+		$"../end_turn_button".disabled = true
+		$"../end_turn_button".visible = false

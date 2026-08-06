@@ -7,7 +7,7 @@ const CARD_DRAW_SPEED = 0.2 #Controls speed at which cards are drawn out of deck
 const STARTING_HAND_SIZE = 5
 
 #This variable contains the player's entire deck and all its cards
-var player_deck = ["Knight", "Archer", "Demon", "Knight", "Knight", "Knight", "Knight"]
+var player_deck = ["Knight", "Archer", "Demon", "Knight", "Tornado", "Tornado", "Tornado"]
 var card_database_reference 
 var drawn_card_this_turn = false
 
@@ -23,7 +23,8 @@ func _ready() -> void:
 		drawn_card_this_turn = false
 	drawn_card_this_turn = true
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Everytime a card is drawn, it must be "instantiated" aka turned into an actual card with its attributes
+# This function does that. It's a very important fuction!
 func draw_card():
 	if drawn_card_this_turn:
 		return
@@ -48,11 +49,21 @@ func draw_card():
 	new_card.position = self.position
 	new_card.get_node("card_image").texture = load(card_image_path)
 	
-	new_card.attack = card_database_reference.CARDS[card_drawn_name][0]
-	new_card.get_node("attack").text = str(new_card.attack)
-	new_card.health = card_database_reference.CARDS[card_drawn_name][1]
-	new_card.get_node("health").text = str(new_card.health)
+	#Checks if the card is a monster or a magic card and sets it up accordingly
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name][2]
+	if new_card.card_type == "monster":
+		new_card.get_node("ability").visible = false
+		new_card.attack = card_database_reference.CARDS[card_drawn_name][0]
+		new_card.get_node("attack").text = str(new_card.attack)
+		new_card.health = card_database_reference.CARDS[card_drawn_name][1]
+		new_card.get_node("health").text = str(new_card.health)
+	elif new_card.card_type == "magic":
+		new_card.get_node("attack").visible = false
+		new_card.get_node("health").visible = false
+		new_card.get_node("ability").text = card_database_reference.CARDS[card_drawn_name][3]
+		var new_card_ability_script_path = card_database_reference.CARDS[card_drawn_name][4]
+		if new_card_ability_script_path:
+			new_card.ability_script = load(new_card_ability_script_path).new()
 	
 	$"../card_manager".add_child(new_card)
 	new_card.name = "Card"

@@ -12,6 +12,7 @@ const COLLISON_MASK_OPPONENT_CARD = 8
 
 var card_manager_reference
 var deck_reference
+var inputs_disabled = false
 
 
 func _ready() -> void:
@@ -30,6 +31,8 @@ func _input(event):
 
 
 func raycast_at_cursor():
+	if inputs_disabled:
+		return
 	var space_state = get_viewport().world_2d.direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()
 	parameters.position = get_viewport().get_mouse_position()

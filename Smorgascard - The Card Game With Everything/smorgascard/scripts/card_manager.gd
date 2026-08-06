@@ -34,15 +34,20 @@ func _process(_delta: float) -> void:
 func card_clicked(card):
 	if card.card_slot_card_is_in:
 		#card is on battlefield
-		if $"../battle_manager".is_opponents_turn == false:
-			if $"../battle_manager".player_is_attacking == false:
-				if card not in $"../battle_manager".player_cards_that_attacked_this_turn:
-					if $"../battle_manager".opponent_cards_on_battlefield.size() == 0:
-						#runs a direct attack if no cards on opponent's side
-						$"../battle_manager".direct_attack(card, "player")
-						return
-					else:
-						select_card_for_battle(card)
+		if $"../battle_manager".is_opponents_turn:
+			return
+		if $"../battle_manager".player_is_attacking:
+			return
+		if card in $"../battle_manager".player_cards_that_attacked_this_turn:
+			return
+		if card.card_type != "monster":
+			return
+		
+		if $"../battle_manager".opponent_cards_on_battlefield.size() == 0:
+			#runs a direct attack if no cards on opponent's side
+			$"../battle_manager".direct_attack(card, "player")
+		else:
+			select_card_for_battle(card)
 	else:
 		#Allow dragging the card to the battlefield
 		start_drag(card)
@@ -79,18 +84,28 @@ func finish_drag():
 		player_hand_reference.remove_card_from_hand(card_being_dragged)
 		#Checks if card is allowed to be placced in this slot
 		if card_being_dragged.card_type == card_slot_found.card_slot_type:
-			if !played_monster_card_this_turn:
-				#Card dropped into empty slot
-				card_being_dragged.scale = Vector2(CARD_SMALLER_SCALE, CARD_SMALLER_SCALE)
-				card_being_dragged.z_index = -1
-				is_hovering_on_card = false
-				card_being_dragged.position = card_slot_found.position
-				card_being_dragged.card_slot_card_is_in = card_slot_found
-				card_slot_found.card_in_slot = true
-				card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
-				$"../battle_manager".player_cards_on_battlefield.append(card_being_dragged)
+			if card_being_dragged.card_type == "monster" && played_monster_card_this_turn:
+				player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 				card_being_dragged = null
 				return
+			
+			#Card dropped into empty slot
+			card_being_dragged.scale = Vector2(CARD_SMALLER_SCALE, CARD_SMALLER_SCALE)
+			card_being_dragged.z_index = -1
+			is_hovering_on_card = false
+			card_being_dragged.position = card_slot_found.position
+			card_being_dragged.card_slot_card_is_in = card_slot_found
+			card_slot_found.card_in_slot = true
+			card_slot_found.get_node("Area2D/CollisionShape2D").disabled = true
+			
+			if card_being_dragged.card_type == "monster":
+				$"../battle_manager".player_cards_on_battlefield.append(card_being_dragged)
+				#played_monster_card_this_turn = true #########<- Uncomment to only allow 1 played card a turn
+			else:
+				card_being_dragged.ability_script.trigger_ability($"../battle_manager", card_being_dragged, $"../input_manager")
+			
+			card_being_dragged = null
+			return
 	player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
 	
@@ -137,6 +152,8 @@ func card_hovered_off(card):
 
 #Handles the highlighting of each card
 func highlight_card(card, hovered_status):
+	if card.card_slot_card_is_in:
+		return
 	if hovered_status:
 		card.scale = Vector2(CARD_BIGGER_SCALE, CARD_BIGGER_SCALE)
 		card.z_index = 2
