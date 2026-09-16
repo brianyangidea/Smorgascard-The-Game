@@ -5,9 +5,9 @@ const TORNADO_DAMAGE = 1
 
 #Ability: Deal 1 damage to all enemy minions on the field
 func trigger_ability(battle_manager_reference, card_with_ability, input_mananger_reference):
-
+ 
 	#Disables end turn button & inputs for duration of animation
-	$input_manager.inputs_disabled = true
+	input_mananger_reference.inputs_disabled = true
 	battle_manager_reference.enable_end_turn_button(false)
 	
 	await battle_manager_reference.wait(1.0)
@@ -34,5 +34,5 @@ func trigger_ability(battle_manager_reference, card_with_ability, input_mananger
 	await battle_manager_reference.wait(1.0)
 	
 	#Enable end turn button & inputs
-	$input_manager.inputs_disabled = false
-	battle_manager_reference.enable_end_turn_button(false)
+	battle_manager_reference.enable_end_turn_button(true)
+	input_mananger_reference.inputs_disabled = false
