@@ -52,7 +52,6 @@ func draw_card():
 	#Checks if the card is a monster or a magic card and sets it up accordingly
 	new_card.card_type = card_database_reference.CARDS[card_drawn_name][2]
 	if new_card.card_type == "monster":
-		new_card.get_node("ability").visible = false
 		new_card.attack = card_database_reference.CARDS[card_drawn_name][0]
 		new_card.get_node("attack").text = str(new_card.attack)
 		new_card.health = card_database_reference.CARDS[card_drawn_name][1]
@@ -60,10 +59,13 @@ func draw_card():
 	elif new_card.card_type == "magic":
 		new_card.get_node("attack").visible = false
 		new_card.get_node("health").visible = false
+		
+	var new_card_ability_script_path = card_database_reference.CARDS[card_drawn_name][4]
+	if new_card_ability_script_path:
+		new_card.ability_script = load(new_card_ability_script_path).new()
 		new_card.get_node("ability").text = card_database_reference.CARDS[card_drawn_name][3]
-		var new_card_ability_script_path = card_database_reference.CARDS[card_drawn_name][4]
-		if new_card_ability_script_path:
-			new_card.ability_script = load(new_card_ability_script_path).new()
+	else:
+		new_card.get_node("ability").visible = false
 	
 	$"../card_manager".add_child(new_card)
 	new_card.name = "Card"
