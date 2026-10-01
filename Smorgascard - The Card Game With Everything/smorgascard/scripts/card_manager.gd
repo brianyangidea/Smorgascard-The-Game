@@ -36,10 +36,10 @@ func card_clicked(card):
 		#card is on battlefield
 		if $"../battle_manager".is_opponents_turn:
 			return
-		if $"../battle_manager".player_is_attacking:
-			return
+
 		if card in $"../battle_manager".player_cards_that_attacked_this_turn:
 			return
+			
 		if card.card_type != "monster":
 			return
 		
