@@ -1,3 +1,3 @@
-Smorgascard is the card game with literally everything. Mana? Check! RPG? Check! Cultural References? Double Check! This game has it all!
+Smorgascard is the card game with literally everything. Mana? Check! RPG? Check! Cultural References? Double Check! This game has it all! 
 
-Currently in development!
+Development currently on hiatus.
